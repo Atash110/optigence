@@ -1,0 +1,20 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="96" cy="96" r="80" fill="url(#gradient)"/>
+  
+  <!-- Letter O -->
+  <circle cx="96" cy="96" r="48" stroke="#ffffff" stroke-width="8" fill="none"/>
+  
+  <!-- Inner accent -->
+  <circle cx="96" cy="96" r="24" fill="#ffffff" opacity="0.2"/>
+  
+  <!-- Center dot -->
+  <circle cx="96" cy="96" r="8" fill="#ffffff"/>
+</svg>

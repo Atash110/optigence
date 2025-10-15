@@ -1,0 +1,33 @@
+{
+  "title": "Der Warteliste beitreten",
+  "subtitle": "Früher Zugang zu KI-gestützter Innovation",
+  "description": "Seien Sie der Erste, der Optigences modulare KI-Plattform erlebt. Erhalten Sie frühen Zugang und Gründerpreise.",
+  "form": {
+    "email_label": "E-Mail-Adresse",
+    "email_placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
+    "email_required": "E-Mail ist erforderlich",
+    "email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "subscribe_label": "Updates und Produktneuigkeiten abonnieren",
+    "submit_button": "Der Warteliste beitreten",
+    "submitting": "Trete bei...",
+    "success_title": "Willkommen in der Zukunft!",
+    "success_message": "Sie haben sich erfolgreich für unsere Warteliste angemeldet. Wir benachrichtigen Sie, sobald wir starten.",
+    "error_title": "Etwas ist schief gelaufen",
+    "already_exists": "Diese E-Mail steht bereits auf der Warteliste"
+  },
+  "benefits": {
+    "title": "Was Sie erhalten werden",
+    "early_access": {
+      "title": "Früher Zugang",
+      "description": "Gehören Sie zu den Ersten, die unsere revolutionäre KI-Plattform erleben"
+    },
+    "founder_pricing": {
+      "title": "Gründerpreise",
+      "description": "Sichern Sie sich spezielle Preise, die nur für frühe Unterstützer verfügbar sind"
+    },
+    "direct_input": {
+      "title": "Direkter Input",
+      "description": "Ihr Feedback wird direkt beeinflussen, wie wir die Plattform entwickeln und verbessern"
+    }
+  }
+}

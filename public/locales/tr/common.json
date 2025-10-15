@@ -1,0 +1,17 @@
+{
+  "navigation": {
+    "home": "Ana Sayfa",
+    "about": "Hakkında",
+    "features": "Özellikler", 
+    "pricing": "Fiyatlandırma",
+    "contact": "İletişim"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "close": "Kapat",
+    "save": "Kaydet",
+    "cancel": "İptal"
+  }
+}

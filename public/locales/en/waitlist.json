@@ -1,0 +1,49 @@
+{
+  "title": "Join the Waitlist",
+  "subtitle": "Early Access to AI-Powered Innovation",
+  "description": "Be the first to experience Optigence's modular AI platform. Get early access and founder pricing.",
+  "form": {
+    "email_label": "Email Address",
+    "email_placeholder": "Enter your email address",
+    "email_required": "Email is required",
+    "email_invalid": "Please enter a valid email address",
+    "subscribe_label": "Subscribe to updates and product news",
+    "submit_button": "Join the Waitlist",
+    "submitting": "Joining...",
+    "success_title": "Welcome to the Future!",
+    "success_message": "You've successfully joined our waitlist. We'll notify you as soon as we launch.",
+    "error_title": "Something went wrong",
+    "already_exists": "This email is already on the waitlist"
+  },
+  "benefits": {
+    "title": "What You'll Get",
+    "early_access": {
+      "title": "Early Access",
+      "description": "Be among the first to experience our revolutionary AI platform"
+    },
+    "founder_pricing": {
+      "title": "Founder Pricing", 
+      "description": "Lock in special pricing available only to early supporters"
+    },
+    "direct_input": {
+      "title": "Direct Input",
+      "description": "Your feedback will directly influence how we develop and improve the platform"
+    }
+  },
+  "features_preview": {
+    "title": "Platform Features",
+    "subtitle": "What makes Optigence different",
+    "modular_design": {
+      "title": "Modular Design",
+      "description": "Choose and combine AI modules that fit your specific needs"
+    },
+    "intelligent_automation": {
+      "title": "Intelligent Automation",
+      "description": "Automate complex workflows with context-aware AI"
+    },
+    "seamless_integration": {
+      "title": "Seamless Integration",
+      "description": "Connect with your existing tools and systems effortlessly"
+    }
+  }
+}

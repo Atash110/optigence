@@ -1,0 +1,171 @@
+{
+  "hero": {
+    "tagline": "Coming Soon - Join the AI Revolution",
+    "title": "AI-Powered Business Solutions",
+    "subtitle": "Transform your business with intelligent automation and AI-driven insights across email, shopping, hiring, and travel - all powered by cutting-edge artificial intelligence.",
+    "description": "Optigence provides cutting-edge AI solutions to streamline operations, enhance productivity, and drive growth for businesses of all sizes.",
+    "value1": "AI-Powered",
+    "value2": "Multi-Module",
+    "value3": "Enterprise Ready",
+    "no_spam": "No spam, ever",
+    "early_access": "Early access guaranteed",
+    "cta_primary": "Get Started",
+    "cta_secondary": "Learn More",
+    "watch_demo": "Watch Demo"
+  },
+  "modules": {
+    "title": "AI-Powered Modules",
+    "subtitle": "Choose the modules that fit your needs",
+    "optimail": {
+      "description": "Your super-intelligent email assistant that thinks, feels, and speaks for you",
+      "feature1": "Smart email composition with emotional intelligence",
+      "feature2": "Thread summarization with action points", 
+      "feature3": "Context-aware reply suggestions",
+      "feature4": "Tone analysis and voice narration"
+    },
+    "optishop": {
+      "description": "AI-powered shopping assistant for smarter purchasing decisions",
+      "feature1": "Product research and recommendations",
+      "feature2": "Price comparison across retailers",
+      "feature3": "Deal finding and discount alerts",
+      "feature4": "Smart shopping lists and wishlists"
+    },
+    "optihire": {
+      "description": "Career development and job search assistant",
+      "feature1": "Resume and cover letter optimization",
+      "feature2": "Interview preparation and practice",
+      "feature3": "Career path and skill development",
+      "feature4": "Job matching and networking tips"
+    },
+    "optitrip": {
+      "description": "Travel planning and social companion assistant",
+      "feature1": "Detailed itinerary planning",
+      "feature2": "Local recommendations and insights",
+      "feature3": "Budget planning and expense tracking",
+      "feature4": "Travel community and companion matching"
+    }
+  },
+  "features": {
+    "title": "Why Choose Optigence",
+    "subtitle": "Powerful features designed for modern businesses",
+    "minimal_input": {
+      "title": "Minimal Input Required",
+      "description": "Get maximum results with minimal effort - our AI understands context"
+    },
+    "multilingual": {
+      "title": "Multilingual Support",
+      "description": "Communicate in multiple languages with native-level fluency"
+    },
+    "proactive": {
+      "title": "Proactive Assistance",
+      "description": "AI that anticipates your needs and provides intelligent suggestions"
+    }
+  },
+  "benefits": {
+    "pro_features": {
+      "title": "Pro Features",
+      "description": "Advanced AI capabilities for power users"
+    }
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "subtitle": "Trusted by businesses worldwide"
+  },
+  "cta_section": {
+    "title": "Ready to Transform Your Business?",
+    "subtitle": "Join thousands of businesses already using Optigence",
+    "button": "Start Your Journey"
+  },
+  "ai_demos": {
+    "title": "Experience AI Intelligence",
+    "subtitle": "See how Optigence AI understands, thinks, and responds in real-time",
+    "intent_detection": {
+      "title": "Intent Detection",
+      "subtitle": "AI understands what you need",
+      "placeholder": "Type what you need help with...",
+      "detected_intent": "Detected Intent:",
+      "confidence": "confident",
+      "excellent_match": "Excellent match!",
+      "very_good_match": "Very good match",
+      "good_match": "Good match",
+      "moderate_match": "Moderate match",
+      "try_examples": "Try these examples:",
+      "analysis_process": "AI Analysis Process:",
+      "example1": "Write a follow-up email to our client about the project proposal",
+      "example2": "Find the best gaming laptop under $1500",
+      "example3": "Plan a 5-day family vacation to Tokyo",
+      "intents": {
+        "email_generation": "Email Generation",
+        "product_search": "Product Search",
+        "travel_planning": "Travel Planning",
+        "job_search": "Job Search",
+        "information_query": "Information Query",
+        "document_creation": "Document Creation",
+        "reservation_system": "Reservation System",
+        "general_ai_assistant": "General AI Assistant"
+      },
+      "steps": {
+        "parsing": "Parsing user input...",
+        "analyzing": "Analyzing language patterns...",
+        "identifying": "Identifying key entities...",
+        "calculating": "Calculating intent confidence...",
+        "generating": "Generating recommendations..."
+      }
+    },
+    "thought_process": {
+      "title": "AI Thought Process",
+      "subtitle": "Watch AI think step by step",
+      "start_analysis": "Start AI Analysis",
+      "footer": "Neural processing at work",
+      "steps": {
+        "analyzing": "Analyzing Input",
+        "analyzing_desc": "Understanding user context, intent, and emotional tone",
+        "processing": "Processing Data", 
+        "processing_desc": "Accessing vast knowledge base and pattern recognition",
+        "generating": "Generating Solution",
+        "generating_desc": "Creating personalized, contextually intelligent response",
+        "optimizing": "Optimizing Output",
+        "optimizing_desc": "Refining for maximum accuracy, relevance, and usefulness"
+      }
+    },
+    "smart_prediction": {
+      "title": "Smart Predictions",
+      "subtitle": "Hover over modules to see AI predictions",
+      "hover_prompt": "Hover over a module to see AI predictions",
+      "generating": "Generating AI predictions...",
+      "ai_predicted": "AI predicted tasks for",
+      "modules": {
+        "optimail": "OptiMail",
+        "optishop": "OptiShop", 
+        "optihire": "OptiHire",
+        "optitrip": "OptiTrip"
+      },
+      "predictions": {
+        "OptiMail": {
+          "0": "Generate follow-up email for client meeting",
+          "1": "Create newsletter for product launch",
+          "2": "Draft apology email for delayed delivery",
+          "3": "Write thank you message to team"
+        },
+        "OptiShop": {
+          "0": "Find wireless headphones under $100",
+          "1": "Compare iPhone 15 vs Samsung Galaxy",
+          "2": "Search for ergonomic office chair",
+          "3": "Find birthday gift for tech enthusiast"
+        },
+        "OptiHire": {
+          "0": "Find remote React developer positions", 
+          "1": "Create resume for marketing manager role",
+          "2": "Prepare for software engineer interview",
+          "3": "Search for entry-level data analyst jobs"
+        },
+        "OptiTrip": {
+          "0": "Plan 7-day itinerary for Tokyo",
+          "1": "Find budget hotels in Barcelona",
+          "2": "Book flights from NYC to London",
+          "3": "Discover hidden gems in Prague"
+        }
+      }
+    }
+  }
+}

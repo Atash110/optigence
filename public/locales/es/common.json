@@ -1,0 +1,17 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "features": "Características",
+    "pricing": "Precios", 
+    "contact": "Contacto"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  }
+}

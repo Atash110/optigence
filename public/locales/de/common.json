@@ -1,0 +1,61 @@
+{
+  "navigation": {
+    "home": "Startseite",
+    "about": "Über uns",
+    "features": "Funktionen", 
+    "pricing": "Preise",
+    "waitlist": "Warteliste beitreten",
+    "get_started": "Loslegen",
+    "dashboard": "Dashboard"
+  },
+  "common": {
+    "loading": "Lädt...",
+    "error": "Fehler", 
+    "success": "Erfolgreich",
+    "submit": "Absenden",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "save": "Speichern",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "name": "Name",
+    "phone": "Telefon",
+    "company": "Unternehmen",
+    "required": "Erforderlich",
+    "optional": "Optional",
+    "learn_more": "Mehr erfahren",
+    "get_started": "Loslegen",
+    "join_waitlist": "Der Warteliste beitreten",
+    "try_now": "Jetzt testen",
+    "coming_soon": "Demnächst verfügbar",
+    "powered_by": "Unterstützt von",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Vorherige",
+    "continue": "Fortfahren"
+  },
+  "footer": {
+    "company": "Unternehmen",
+    "products": "Produkte",
+    "resources": "Ressourcen",
+    "legal": "Rechtliches",
+    "privacy_policy": "Datenschutzrichtlinie",
+    "terms_of_service": "Nutzungsbedingungen",
+    "all_rights_reserved": "Alle Rechte vorbehalten.",
+    "built_with": "Mit ❤️ von Optigence erstellt"
+  },
+  "language": {
+    "select_language": "Sprache auswählen",
+    "current_language": "Aktuelle Sprache",
+    "english": "English",
+    "german": "Deutsch",
+    "spanish": "Español",
+    "french": "Français", 
+    "azerbaijani": "Azərbaycan",
+    "turkish": "Türkçe",
+    "chinese": "中文",
+    "russian": "Русский",
+    "hindi": "हिन्दी", 
+    "arabic": "العربية"
+  }
+}

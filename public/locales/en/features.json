@@ -1,0 +1,42 @@
+{
+  "title": "Platform Features",
+  "subtitle": "Comprehensive AI Solutions for Modern Businesses",
+  "overview": {
+    "title": "Everything You Need in One Platform",
+    "description": "Optigence combines multiple AI-powered tools and services into a unified platform designed to transform how businesses operate."
+  },
+  "modules": {
+    "title": "AI Modules",
+    "subtitle": "Choose the modules that fit your needs",
+    "automation": {
+      "title": "Process Automation",
+      "description": "Automate repetitive tasks and complex workflows with intelligent AI systems",
+      "features": ["Workflow Designer", "Smart Triggers", "Custom Rules", "Integration APIs"]
+    },
+    "analytics": {
+      "title": "Advanced Analytics",
+      "description": "Transform data into actionable insights with AI-powered analytics",
+      "features": ["Real-time Dashboards", "Predictive Analytics", "Custom Reports", "Data Visualization"]
+    },
+    "communication": {
+      "title": "Smart Communication",
+      "description": "Enhance customer interactions with AI-driven communication tools",
+      "features": ["Chatbots", "Email Automation", "Voice Analytics", "Sentiment Analysis"]
+    },
+    "optimization": {
+      "title": "Business Optimization",
+      "description": "Optimize operations and resource allocation with AI recommendations",
+      "features": ["Resource Planning", "Cost Optimization", "Performance Monitoring", "Strategic Insights"]
+    }
+  },
+  "integrations": {
+    "title": "Seamless Integrations",
+    "subtitle": "Connect with your favorite tools",
+    "description": "Optigence integrates with over 100+ popular business tools and platforms"
+  },
+  "security": {
+    "title": "Enterprise Security",
+    "subtitle": "Your data is protected",
+    "description": "Bank-level security with end-to-end encryption and compliance with industry standards"
+  }
+}

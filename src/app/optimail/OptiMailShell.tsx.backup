@@ -1,0 +1,1016 @@
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Moon, Sun, Layers, Zap, Users, Sparkles, Calendar, ExternalLink } from 'lucide-react';
+import EnhancedVoiceInput from '@/components/EnhancedVoiceInput';
+import ContextPanel from '@/components/ContextPanel';
+import { VoiceResult } from '@/lib/voice';
+import { ContextWindow } from '@/lib/memory';
+import RealtimeService from '@/lib/realtime';
+import templateService, { PatternDetection, TemplateMatch } from '@/lib/templates';
+import CalendarIntegration from '@/components/optimail/CalendarIntegration';
+import CrossModuleIntegration from '@/components/optimail/CrossModuleIntegration';
+import SmartPopups from '@/components/optimail/SmartPopups';
+import { SmartSlot } from '@/types/optimail';
+
+interface LiveSuggestion {
+  id: string;
+  type: string;
+  position: number;
+  original: string;
+  suggestion: string;
+  confidence: number;
+  reason: string;
+  auto_apply: boolean;
+}
+
+export default function OptiMailShell() {
+  const [input, setInput] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [currentChips, setCurrentChips] = useState<string[]>([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [transcript, setTranscript] = useState('');
+  const [isDrafting, setIsDrafting] = useState(false);
+  const [draftContent, setDraftContent] = useState('');
+  const [alternatives, setAlternatives] = useState<string[]>([]);
+  const [typingIndex, setTypingIndex] = useState(0);
+  const [showDraft, setShowDraft] = useState(false);
+  const [lastVoiceResult, setLastVoiceResult] = useState<VoiceResult | null>(null);
+  const [contextWindow, setContextWindow] = useState<ContextWindow | null>(null);
+  const [userId] = useState('demo-user');
+  const [sessionId, setSessionId] = useState<string>('');
+  const [collaborators, setCollaborators] = useState<string[]>([]);
+  const [typingUsers, setTypingUsers] = useState<string[]>([]);
+  const [liveSuggestions, setLiveSuggestions] = useState<LiveSuggestion[]>([]);
+  const [templateMatches, setTemplateMatches] = useState<TemplateMatch[]>([]);
+  const [showTemplateSuggestion, setShowTemplateSuggestion] = useState(false);
+  const [detectedPatterns, setDetectedPatterns] = useState<PatternDetection[]>([]);
+  const [suggestedTemplateName, setSuggestedTemplateName] = useState('');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showCrossModule, setShowCrossModule] = useState(false);
+  
+  const inputRef = useRef<HTMLInputElement>(null);
+  const draftRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const realtimeServiceRef = useRef<RealtimeService | null>(null);
+
+  // Initialize real-time collaboration
+  useEffect(() => {
+    const initRealtime = async () => {
+      try {
+        realtimeServiceRef.current = new RealtimeService();
+        await realtimeServiceRef.current.initialize(userId);
+        const newSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        setSessionId(newSessionId);
+        
+        // Set up real-time event listeners
+        realtimeServiceRef.current.onMessage((message) => {
+          if (message.type === 'collaboration') {
+            // Handle collaboration messages
+            console.log('Collaboration message:', message);
+          }
+        });
+        
+        realtimeServiceRef.current.onSuggestion((suggestion) => {
+          // Convert to local LiveSuggestion type
+          const localSuggestion: LiveSuggestion = {
+            ...suggestion,
+            auto_apply: suggestion.auto_apply || false
+          };
+          setLiveSuggestions(prev => [...prev.filter(s => s.id !== suggestion.id), localSuggestion]);
+        });
+        
+        realtimeServiceRef.current.onTyping((typing) => {
+          if (typing.userId !== userId) {
+            // For simplicity, assume any typing indicator means user is currently typing
+            setTypingUsers(prev => [...prev.filter(id => id !== typing.userId), typing.userId]);
+            
+            // Remove typing indicator after 3 seconds
+            setTimeout(() => {
+              setTypingUsers(prev => prev.filter(id => id !== typing.userId));
+            }, 3000);
+          }
+        });
+        
+        realtimeServiceRef.current.onCollaborators((participants) => {
+          setCollaborators(participants.filter(p => p.userId !== userId).map(p => p.userId));
+        });
+        
+      } catch (error) {
+        console.error('Failed to initialize real-time collaboration:', error);
+      }
+    };
+    
+    initRealtime();
+    
+    return () => {
+      realtimeServiceRef.current?.disconnect();
+    };
+  }, [userId]);
+
+  // Live suggestions on input change
+  useEffect(() => {
+    const fetchLiveSuggestions = async () => {
+      if (input.length > 10 && sessionId) {
+        try {
+          const response = await fetch('/api/optimail/realtime/suggestions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              content: input,
+              position: input.length,
+              userId,
+              threadId: sessionId
+            })
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            setLiveSuggestions(data.suggestions || []);
+          }
+        } catch (error) {
+          console.error('Failed to fetch live suggestions:', error);
+        }
+      }
+    };
+
+    const debounceTimer = setTimeout(fetchLiveSuggestions, 500);
+    return () => clearTimeout(debounceTimer);
+  }, [input, sessionId, userId]);
+
+  // Handle click outside drawer to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isDrawerOpen && drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+        // Also check if click is not on the drawer toggle button
+        const target = event.target as Element;
+        if (!target.closest('[data-drawer-toggle]')) {
+          setIsDrawerOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDrawerOpen]);
+
+  // Auto-save email to memory when generated
+  const saveEmailToMemory = async (emailData: {
+    intent?: { intent: string };
+    primary: string;
+    entities?: { attendees?: string[] };
+    [key: string]: unknown;
+  }) => {
+    try {
+      await fetch('/api/optimail/memory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId,
+          action: 'save_email',
+          data: {
+            intent: emailData.intent?.intent || 'compose',
+            original_input: input,
+            voice_transcript: transcript,
+            generated_email: emailData.primary,
+            chosen_alternative: null,
+            recipient: emailData.entities?.attendees?.[0],
+            subject: extractSubjectFromEmail(emailData.primary),
+            tone: contextWindow?.user_preferences.preferred_tone || 'professional',
+            entities: emailData.entities || {},
+            voice_metadata: lastVoiceResult ? {
+              provider: lastVoiceResult.provider,
+              confidence: lastVoiceResult.confidence,
+              duration: lastVoiceResult.duration,
+              emotional_tone: lastVoiceResult.emotions?.tone
+            } : undefined,
+            sent: false
+          }
+        })
+      });
+    } catch (error) {
+      console.error('Failed to save email to memory:', error);
+    }
+  };
+
+  const extractSubjectFromEmail = (email: string): string => {
+    if (!email || typeof email !== 'string') {
+      return '';
+    }
+    const lines = email.split('\n');
+    const subjectLine = lines.find(line => line.toLowerCase().startsWith('subject:'));
+    return subjectLine ? subjectLine.replace(/^subject:\s*/i, '').trim() : '';
+  };
+
+  // Template pattern analysis
+  const analyzeTemplatePatterns = async (emailData: {
+    primary: string;
+    intent?: { intent: string };
+    entities?: { attendees?: string[] };
+  }) => {
+    try {
+      const subject = extractSubjectFromEmail(emailData.primary);
+      const body = emailData.primary;
+      const recipients = emailData.entities?.attendees || [];
+      const intent = emailData.intent?.intent || 'compose';
+
+      // Analyze patterns in user's email history
+      const patterns = await templateService.analyzeForPatterns(
+        subject,
+        body,
+        recipients,
+        intent,
+        userId
+      );
+
+      setDetectedPatterns(patterns);
+
+      // Check if we should suggest creating a template
+      const shouldCreateTemplate = templateService.shouldSuggestTemplate(
+        patterns,
+        intent,
+        recipients
+      );
+
+      if (shouldCreateTemplate) {
+        setShowTemplateSuggestion(true);
+        setSuggestedTemplateName(`${intent.charAt(0).toUpperCase() + intent.slice(1)} - ${subject.slice(0, 30)}`);
+      }
+
+      // Also check for existing template matches
+      const matches = await templateService.findTemplateMatches(
+        subject,
+        body,
+        recipients,
+        intent,
+        userId
+      );
+
+      setTemplateMatches(matches);
+
+    } catch (error) {
+      console.error('Template analysis error:', error);
+    }
+  };
+
+  // Create template from current email
+  const createTemplateFromCurrent = async () => {
+    if (!draftContent || !suggestedTemplateName) return;
+
+    try {
+      const subject = extractSubjectFromEmail(draftContent);
+      const template = await templateService.createTemplate(
+        suggestedTemplateName,
+        subject,
+        draftContent,
+        currentChips[0] || 'compose', // Use first chip as intent
+        [], // Recipients can be added later
+        detectedPatterns.map(p => p.pattern).slice(0, 3), // Use first 3 patterns as tags
+        userId
+      );
+
+      if (template) {
+        setTemplates(prev => [template, ...prev]);
+        setShowTemplateSuggestion(false);
+        // Show success feedback
+        console.log('Template created:', template.name);
+      }
+    } catch (error) {
+      console.error('Template creation error:', error);
+    }
+  };
+
+  // Load user templates on component mount
+  useEffect(() => {
+    const loadTemplates = async () => {
+      try {
+        const userTemplates = await templateService.getUserTemplates(userId);
+        setTemplates(userTemplates);
+      } catch (error) {
+        console.error('Failed to load templates:', error);
+      }
+    };
+
+    loadTemplates();
+  }, [userId]);
+
+  // Typing animation effect (300 CPM = 5 CPS)
+  useEffect(() => {
+    if (draftContent && typeof draftContent === 'string' && showDraft && typingIndex < draftContent.length) {
+      const timer = setTimeout(() => {
+        setTypingIndex(prev => prev + 1);
+      }, 200); // 5 characters per second = 200ms per character
+      return () => clearTimeout(timer);
+    }
+  }, [draftContent, showDraft, typingIndex]);
+
+  const getChipsForIntent = (intent: string): string[] => {
+    const chipMap: Record<string, string[]> = {
+      'reply': ['Reply All', 'Forward', 'Archive'],
+      'compose': ['CC/BCC', 'Schedule', 'Template'],
+      'meeting': ['Calendar', 'Zoom Link', 'Remind'],
+      'follow_up': ['Snooze', 'Priority', 'Task'],
+      'introduction': ['Connect', 'LinkedIn', 'Follow-up'],
+      'request': ['Deadline', 'Priority', 'Follow-up'],
+      'complaint': ['Escalate', 'Document', 'Resolution'],
+      'thank_you': ['Acknowledge', 'Archive', 'Connect']
+    };
+    return chipMap[intent] || ['Send', 'Draft', 'Schedule'];
+  };
+
+  const processInput = async (text: string) => {
+    if (!text.trim()) return;
+    
+    setIsDrafting(true);
+    setTypingIndex(0);
+    
+    try {
+      // Call the draft API
+      const response = await fetch('/api/optimail/draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          input: text,
+          userMemory: {
+            tone: 'professional',
+            language: 'en'
+          }
+        })
+      });
+
+      if (!response.ok) throw new Error('Draft failed');
+      
+      const data = await response.json();
+      
+      // Set draft content and alternatives
+      setDraftContent(data.primary);
+      setAlternatives(data.alternatives || []);
+      
+      // Update chips based on intent
+      if (data.intent?.intent) {
+        setCurrentChips(getChipsForIntent(data.intent.intent));
+      }
+      
+      // Show draft with typing animation
+      setShowDraft(true);
+      
+      // Save to memory for learning
+      await saveEmailToMemory(data);
+      
+      // Analyze for template patterns and matches
+      await analyzeTemplatePatterns(data);
+      
+    } catch (error) {
+      console.error('Processing error:', error);
+      setDraftContent('Sorry, I couldn\'t process that request. Please try again.');
+      setShowDraft(true);
+    } finally {
+      setIsDrafting(false);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (input.trim()) {
+      processInput(input);
+      setInput('');
+    }
+  };
+
+  const handleTranscriptSubmit = (transcriptText: string) => {
+    setTranscript(transcriptText);
+    processInput(transcriptText);
+  };
+
+  const handleSlotSelect = (slot: SmartSlot) => {
+    setSelectedSlot(slot);
+    
+    // Format the selected slot for insertion into email
+    const slotText = `
+Meeting scheduled for ${slot.startTime.toLocaleDateString()} at ${slot.startTime.toLocaleTimeString()}.
+
+Attendees: ${slot.attendeeCount} people
+Confidence: ${Math.round(slot.confidence * 100)}% match
+Duration: 1 hour
+
+${slot.reasoning}
+`;
+    
+    // Add the slot information to the input or draft
+    if (draftContent) {
+      setDraftContent(draftContent + '\n\n' + slotText);
+    } else {
+      setInput(input + slotText);
+    }
+    
+    // Show calendar integration UI briefly
+    setShowCalendar(true);
+    setTimeout(() => setShowCalendar(false), 3000);
+  };
+
+  const clearDraft = () => {
+    setDraftContent('');
+    setShowDraft(false);
+    setTypingIndex(0);
+    setAlternatives([]);
+    setCurrentChips([]);
+  };
+
+  // Simple handler for cross-module actions
+  const handleCrossModuleAction = (result: { url?: string; success: boolean; message: string }) => {
+    console.log('Cross-module action:', result);
+    // Handle basic cross-module routing
+    if (result.url) {
+      window.open(result.url, '_blank');
+    }
+  };
+
+  // Handle smart suggestions
+  const handleSmartSuggestion = (suggestion: {
+    id: string;
+    type: string;
+    title: string;
+    description: string;
+    confidence: number;
+    action: () => void;
+    dismissable: boolean;
+  }) => {
+    switch (suggestion.type) {
+      case 'template':
+        // Apply template
+        const templateContent = getTemplateForSuggestion(suggestion.id);
+        setInput(input + '\n\n' + templateContent);
+        break;
+        
+      case 'schedule':
+        // Open calendar
+        setShowCalendar(true);
+        break;
+        
+      case 'action':
+        // Handle cross-module actions
+        if (suggestion.id === 'job-posting') {
+          window.open('/optihire', '_blank');
+        } else if (suggestion.id === 'travel-booking') {
+          window.open('/optitrip', '_blank');
+        } else if (suggestion.id === 'urgent-formatting') {
+          setInput(`[URGENT] ${input}`);
+        }
+        break;
+        
+      case 'recipient':
+        // Handle recipient suggestions
+        // This would integrate with recipient management
+        break;
+        
+      default:
+        console.log('Applied suggestion:', suggestion.title);
+    }
+  };
+
+  const getTemplateForSuggestion = (suggestionId: string): string => {
+    const templates: Record<string, string> = {
+      'followup-template': `Hi [Name],
+
+I wanted to follow up on our previous conversation about [Topic].
+
+I hope this finds you well. Please let me know if you have any questions or if there's anything I can help with.
+
+Looking forward to hearing from you.
+
+Best regards,
+[Your Name]`
+    };
+    
+    return templates[suggestionId] || '';
+  };
+
+  return (
+    <div className={`min-h-screen transition-colors duration-500 ${
+      isDarkMode 
+        ? 'bg-gradient-to-br from-optimail-navy via-optimail-navy-light to-optimail-midnight' 
+        : 'bg-gradient-to-br from-gray-50 via-white to-gray-100'
+    }`}>
+      {/* Header */}
+      <div className="flex items-center justify-between p-6">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-optimail-bright-blue to-blue-400 flex items-center justify-center">
+            <Zap size={16} className="text-white" />
+          </div>
+          <h1 className={`text-xl font-medium ${
+            isDarkMode ? 'text-optimail-light' : 'text-gray-900'
+          }`}>
+            OptiMail
+          </h1>
+        </div>
+        
+        <div className="flex items-center gap-3">
+          {/* Collaboration status */}
+          {(collaborators.length > 0 || typingUsers.length > 0) && (
+            <div className={`flex items-center gap-2 px-3 py-1 rounded-full transition-colors ${
+              isDarkMode 
+                ? 'bg-optimail-navy-light/30 text-optimail-light' 
+                : 'bg-gray-100 text-gray-700'
+            }`}>
+              <Users size={14} />
+              <span className="text-sm">
+                {collaborators.length > 0 && `${collaborators.length} collaborator${collaborators.length > 1 ? 's' : ''}`}
+                {typingUsers.length > 0 && (
+                  <>
+                    {collaborators.length > 0 ? ' • ' : ''}
+                    <span className="flex items-center gap-1">
+                      <motion.div
+                        animate={{ opacity: [1, 0.3, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                        className="w-2 h-2 rounded-full bg-optimail-bright-blue"
+                      />
+                      typing...
+                    </span>
+                  </>
+                )}
+              </span>
+            </div>
+          )}
+          
+          <button
+            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+            data-drawer-toggle="true"
+            className={`p-2 rounded-xl transition-colors ${
+              isDarkMode 
+                ? 'hover:bg-optimail-navy-light/50 text-optimail-muted' 
+                : 'hover:bg-gray-200 text-gray-600'
+            }`}
+            title="Open context drawer"
+          >
+            <Layers size={18} />
+          </button>
+          
+          <button
+            onClick={() => setShowCalendar(!showCalendar)}
+            className={`p-2 rounded-xl transition-colors ${
+              showCalendar
+                ? isDarkMode 
+                  ? 'bg-optimail-bright-blue/20 text-optimail-bright-blue' 
+                  : 'bg-blue-100 text-blue-600'
+                : isDarkMode 
+                  ? 'hover:bg-optimail-navy-light/50 text-optimail-muted' 
+                  : 'hover:bg-gray-200 text-gray-600'
+            }`}
+            title="Toggle calendar integration"
+          >
+            <Calendar size={18} />
+          </button>
+
+          <button
+            onClick={() => setShowCrossModule(!showCrossModule)}
+            className={`p-2 rounded-xl transition-colors ${
+              showCrossModule
+                ? isDarkMode 
+                  ? 'bg-optimail-bright-blue/20 text-optimail-bright-blue' 
+                  : 'bg-blue-100 text-blue-600'
+                : isDarkMode 
+                  ? 'hover:bg-optimail-navy-light/50 text-optimail-muted' 
+                  : 'hover:bg-gray-200 text-gray-600'
+            }`}
+            title="Toggle cross-module integration"
+          >
+            <ExternalLink size={18} />
+          </button>
+          
+          <button
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className={`p-2 rounded-xl transition-colors ${
+              isDarkMode 
+                ? 'hover:bg-optimail-navy-light/50 text-optimail-muted' 
+                : 'hover:bg-gray-200 text-gray-600'
+            }`}
+          >
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex flex-col items-center justify-center px-6 optimail-main-content">
+        
+        {/* Draft Display */}
+        <AnimatePresence>
+          {showDraft && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="w-full max-w-4xl mb-8"
+            >
+              <div className={`optimail-glass rounded-2xl p-6 ${
+                isDarkMode ? 'border-optimail-bright-blue/20' : 'border-gray-200'
+              }`}>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className={`text-lg font-medium ${
+                    isDarkMode ? 'text-optimail-light' : 'text-gray-900'
+                  }`}>
+                    Generated Email
+                  </h3>
+                  <button
+                    onClick={clearDraft}
+                    className={`text-sm px-3 py-1 rounded-lg transition-colors ${
+                      isDarkMode 
+                        ? 'text-optimail-muted hover:bg-optimail-navy-light/50' 
+                        : 'text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    Clear
+                  </button>
+                </div>
+                
+                <div 
+                  ref={draftRef}
+                  className={`text-base leading-relaxed whitespace-pre-wrap ${
+                    isDarkMode ? 'text-optimail-light' : 'text-gray-900'
+                  }`}
+                >
+                  {typeof draftContent === 'string' ? draftContent.slice(0, typingIndex) : ''}
+                  {typeof draftContent === 'string' && typingIndex < draftContent.length && (
+                    <motion.span
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                      className="inline-block w-0.5 h-5 bg-optimail-bright-blue ml-1"
+                    />
+                  )}
+                </div>
+
+                {/* Alternative options */}
+                {alternatives.length > 0 && typeof draftContent === 'string' && typingIndex >= draftContent.length && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="mt-6 pt-4 border-t border-optimail-bright-blue/20"
+                  >
+                    <p className={`text-sm mb-3 ${
+                      isDarkMode ? 'text-optimail-muted' : 'text-gray-600'
+                    }`}>
+                      Alternative versions:
+                    </p>
+                    <div className="space-y-2">
+                      {alternatives.map((alt, index) => (
+                        <button
+                          key={index}
+                          onClick={() => {
+                            setDraftContent(alt);
+                            setTypingIndex(0);
+                          }}
+                          className={`text-left text-sm p-3 rounded-lg w-full transition-colors ${
+                            isDarkMode 
+                              ? 'bg-optimail-navy-light/30 hover:bg-optimail-navy-light/50 text-optimail-light' 
+                              : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {alt.slice(0, 120)}...
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Input Section */}
+        <motion.div 
+          layout
+          className="w-full max-w-2xl"
+        >
+          <div className={`optimail-glass rounded-2xl p-6 ${
+            isDarkMode ? 'border-optimail-bright-blue/20' : 'border-gray-200'
+          }`}>
+            
+            {/* Voice Transcript Display */}
+            {transcript && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className={`mb-4 p-3 rounded-xl ${
+                  isDarkMode ? 'bg-optimail-navy-light/30' : 'bg-gray-50'
+                }`}
+              >
+                <p className={`text-sm ${
+                  isDarkMode ? 'text-optimail-light' : 'text-gray-800'
+                }`}>
+                  <span className="opacity-60">Transcript: </span>
+                  {transcript}
+                </p>
+              </motion.div>
+            )}
+            
+            {/* Main Input */}
+            <div className="flex items-center gap-4">
+              <div className="flex-1 relative">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+                  placeholder={isDrafting ? "Drafting..." : "Describe the email you need..."}
+                  disabled={isDrafting}
+                  className={`w-full px-4 py-3 rounded-xl bg-transparent border-0 outline-none text-base ${
+                    isDarkMode 
+                      ? 'text-optimail-light placeholder-optimail-muted' 
+                      : 'text-gray-900 placeholder-gray-500'
+                  }`}
+                />
+                
+                {/* Breathing cursor */}
+                {!isDrafting && (
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-optimail-bright-blue"
+                  />
+                )}
+              </div>
+              
+              {/* Enhanced Voice Input */}
+              <EnhancedVoiceInput
+                isRecording={isRecording}
+                onRecordingChange={setIsRecording}
+                onTranscript={handleTranscriptSubmit}
+                onVoiceResult={(result) => setLastVoiceResult(result)}
+                isDarkMode={isDarkMode}
+                showAdvanced={false}
+                config={{ 
+                  provider: 'whisper',
+                  language: 'en-US',
+                  enhanced: true 
+                }}
+              />
+              
+              {/* Send Button */}
+              <button
+                onClick={handleSubmit}
+                disabled={isDrafting || !input.trim()}
+                className={`p-3 rounded-xl transition-all duration-200 ${
+                  isDrafting || !input.trim()
+                    ? isDarkMode 
+                      ? 'bg-optimail-navy-light/30 text-optimail-muted cursor-not-allowed' 
+                      : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-optimail-bright-blue to-blue-400 text-white hover:shadow-lg hover:scale-105'
+                }`}
+              >
+                {isDrafting ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                  />
+                ) : (
+                  <Send size={20} />
+                )}
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Live Suggestions */}
+        <AnimatePresence>
+          {liveSuggestions.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="w-full max-w-2xl mt-4"
+            >
+              <div className={`optimail-glass rounded-xl p-4 ${
+                isDarkMode ? 'border-optimail-bright-blue/20' : 'border-gray-200'
+              }`}>
+                <div className="flex items-center gap-2 mb-3">
+                  <Sparkles size={16} className="text-optimail-bright-blue" />
+                  <h3 className={`text-sm font-medium ${
+                    isDarkMode ? 'text-optimail-light' : 'text-gray-800'
+                  }`}>
+                    Live Suggestions
+                  </h3>
+                </div>
+                <div className="space-y-2">
+                  {liveSuggestions.slice(0, 3).map((suggestion) => (
+                    <motion.div
+                      key={suggestion.id}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                        isDarkMode 
+                          ? 'hover:bg-optimail-navy-light/30 bg-optimail-navy-light/20' 
+                          : 'hover:bg-gray-50 bg-gray-25'
+                      }`}
+                      onClick={() => {
+                        // Apply suggestion (simplified)
+                        if (suggestion.type === 'content_improvement' && suggestion.position === input.length) {
+                          setInput(prev => prev + ' ' + suggestion.suggestion);
+                        }
+                        // Remove suggestion after applying
+                        setLiveSuggestions(prev => prev.filter(s => s.id !== suggestion.id));
+                      }}
+                    >
+                      <div className={`text-xs px-2 py-1 rounded-full flex-shrink-0 ${
+                        suggestion.type === 'grammar_fix' ? 'bg-red-500/20 text-red-400' :
+                        suggestion.type === 'tone_adjustment' ? 'bg-blue-500/20 text-blue-400' :
+                        suggestion.type === 'content_improvement' ? 'bg-green-500/20 text-green-400' :
+                        'bg-yellow-500/20 text-yellow-400'
+                      }`}>
+                        {suggestion.type.replace('_', ' ')}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm ${
+                          isDarkMode ? 'text-optimail-light' : 'text-gray-800'
+                        }`}>
+                          {suggestion.suggestion}
+                        </p>
+                        <p className={`text-xs mt-1 ${
+                          isDarkMode ? 'text-optimail-muted' : 'text-gray-500'
+                        }`}>
+                          {suggestion.reason}
+                        </p>
+                      </div>
+                      <div className={`text-xs ${
+                        isDarkMode ? 'text-optimail-muted' : 'text-gray-500'
+                      }`}>
+                        {Math.round(suggestion.confidence * 100)}%
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Template Suggestion */}
+        <AnimatePresence>
+          {showTemplateSuggestion && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="w-full max-w-2xl mt-4"
+            >
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={createTemplateFromCurrent}
+                className={`cursor-pointer optimail-glass rounded-xl p-4 border-2 border-dashed transition-all duration-200 ${
+                  isDarkMode 
+                    ? 'border-optimail-bright-blue/40 hover:border-optimail-bright-blue/60 bg-optimail-navy-light/20' 
+                    : 'border-blue-300 hover:border-blue-400 bg-blue-50/50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                    isDarkMode ? 'bg-optimail-bright-blue/20' : 'bg-blue-100'
+                  }`}>
+                    <Sparkles size={16} className="text-optimail-bright-blue" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className={`text-sm font-medium ${
+                      isDarkMode ? 'text-optimail-light' : 'text-gray-800'
+                    }`}>
+                      Save as Template?
+                    </h4>
+                    <p className={`text-xs mt-1 ${
+                      isDarkMode ? 'text-optimail-muted' : 'text-gray-600'
+                    }`}>
+                      We detected a pattern. Save &ldquo;{suggestedTemplateName}&rdquo; for future use.
+                    </p>
+                  </div>
+                  <div className={`text-xs px-2 py-1 rounded-full ${
+                    isDarkMode 
+                      ? 'bg-optimail-bright-blue/20 text-optimail-bright-blue'
+                      : 'bg-blue-100 text-blue-600'
+                  }`}>
+                    Click to save
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Dynamic Chips */}
+        <AnimatePresence>
+          {(currentChips.length > 0 || templateMatches.length > 0) && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: 0.2 }}
+              className="flex flex-wrap gap-2 mt-6 justify-center"
+            >
+              {/* Template matches first */}
+              {templateMatches.slice(0, 2).map((match, index) => (
+                <motion.button
+                  key={`template-${match.template.id}`}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  onClick={async () => {
+                    // Use template
+                    const result = await templateService.useTemplate(match.template.id, {
+                      recipients: []
+                    });
+                    if (result) {
+                      setDraftContent(result.body);
+                      setTypingIndex(0);
+                      setShowDraft(true);
+                    }
+                  }}
+                  className={`px-4 py-2 rounded-full text-sm transition-colors border ${
+                    isDarkMode
+                      ? 'bg-optimail-bright-blue/20 text-optimail-bright-blue border-optimail-bright-blue/40 hover:bg-optimail-bright-blue/30'
+                      : 'bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100'
+                  }`}
+                >
+                  📋 {match.template.name} ({Math.round(match.match_score * 100)}%)
+                </motion.button>
+              ))}
+              
+              {/* Regular chips */}
+              {currentChips.map((chip, index) => (
+                <motion.button
+                  key={chip}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: (templateMatches.length + index) * 0.1 }}
+                  className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                    isDarkMode
+                      ? 'bg-optimail-navy-light/40 text-optimail-light hover:bg-optimail-navy-light/60'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                >
+                  {chip}
+                </motion.button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Enhanced Context Drawer */}
+      <AnimatePresence>
+        {isDrawerOpen && (
+          <motion.div
+            ref={drawerRef}
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 20 }}
+            className={`fixed right-0 top-0 h-full w-96 optimail-glass border-l ${
+              isDarkMode ? 'border-optimail-bright-blue/20' : 'border-gray-200'
+            }`}
+            style={{ backdropFilter: 'blur(20px)' }}
+          >
+            <div className="h-full flex flex-col">
+              <ContextPanel
+                isDarkMode={isDarkMode}
+                userId={userId}
+                currentInput={input}
+                onContextUpdate={setContextWindow}
+              />
+              
+              {/* Calendar Integration */}
+              {showCalendar && (
+                <CalendarIntegration
+                  emailContent={input || draftContent}
+                  isVisible={isDrawerOpen && showCalendar}
+                  onSlotSelect={handleSlotSelect}
+                />
+              )}
+              
+              {/* Cross-Module Integration */}
+              {showCrossModule && (
+                <CrossModuleIntegration
+                  emailContent={input || draftContent}
+                  emailSubject={input.includes('Subject:') ? input.split('Subject:')[1]?.split('\n')[0] : ''}
+                  isDarkMode={isDarkMode}
+                  isVisible={isDrawerOpen && showCrossModule}
+                  onActionExecute={handleCrossModuleAction}
+                />
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Smart Popups for Intent Detection */}
+      <SmartPopups
+        input={input}
+        isDarkMode={isDarkMode}
+        onSuggestionApply={handleSmartSuggestion}
+        isVisible={true}
+      />
+    </div>
+  );
+}

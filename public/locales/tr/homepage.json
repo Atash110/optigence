@@ -1,0 +1,171 @@
+{
+  "hero": {
+    "tagline": "Yakında Geliyor - AI Devrimine Katıl",
+    "title": "AI Destekli İş Çözümleri",
+    "subtitle": "Email, alışveriş, işe alım ve seyahat alanlarında akıllı otomasyon ve AI odaklı içgörülerle işinizi dönüştürün - hepsi en gelişmiş yapay zeka tarafından destekleniyor.",
+    "description": "Optigence, her büyüklükteki işletme için operasyonları kolaylaştırmak, verimliliği artırmak ve büyümeyi desteklemek amacıyla en gelişmiş AI çözümleri sunar.",
+    "value1": "AI Destekli",
+    "value2": "Çoklu Modül",
+    "value3": "Kurumsal Hazır",
+    "no_spam": "Asla spam yok",
+    "early_access": "Erken erişim garantili",
+    "cta_primary": "Başlayın",
+    "cta_secondary": "Daha Fazla Öğren",
+    "watch_demo": "Demo İzle"
+  },
+  "modules": {
+    "title": "AI Destekli Modüller",
+    "subtitle": "İhtiyaçlarınıza uygun modülleri seçin",
+    "optimail": {
+      "description": "Sizin için düşünen, hisseden ve konuşan süper akıllı email asistanınız",
+      "feature1": "Duygusal zeka ile akıllı email yazımı",
+      "feature2": "Eylem noktaları ile konu özetleme", 
+      "feature3": "Bağlam bilinçli yanıt önerileri",
+      "feature4": "Ton analizi ve sesli anlatım"
+    },
+    "optishop": {
+      "description": "Daha akıllı satın alma kararları için AI destekli alışveriş asistanı",
+      "feature1": "Ürün araştırması ve önerileri",
+      "feature2": "Perakendeciler arası fiyat karşılaştırması",
+      "feature3": "Fırsat bulma ve indirim uyarıları",
+      "feature4": "Akıllı alışveriş listeleri ve istek listeleri"
+    },
+    "optihire": {
+      "description": "Kariyer geliştirme ve iş arama asistanı",
+      "feature1": "CV ve ön yazı optimizasyonu",
+      "feature2": "Mülakat hazırlığı ve pratiği",
+      "feature3": "Kariyer yolu ve beceri geliştirme",
+      "feature4": "İş eşleştirme ve networking ipuçları"
+    },
+    "optitrip": {
+      "description": "Seyahat planlama ve sosyal arkadaş asistanı",
+      "feature1": "Detaylı güzergah planlaması",
+      "feature2": "Yerel öneriler ve içgörüler",
+      "feature3": "Bütçe planlaması ve harcama takibi",
+      "feature4": "Seyahat topluluğu ve arkadaş eşleştirme"
+    }
+  },
+  "features": {
+    "title": "Neden Optigence'ı Seçmelisiniz",
+    "subtitle": "Modern işletmeler için tasarlanmış güçlü özellikler",
+    "minimal_input": {
+      "title": "Minimal Girdi Gereksinimi",
+      "description": "Minimal çabayla maksimum sonuç alın - AI'mız bağlamı anlar"
+    },
+    "multilingual": {
+      "title": "Çok Dilli Destek",
+      "description": "Ana dil seviyesinde akıcılıkla birden fazla dilde iletişim kurun"
+    },
+    "proactive": {
+      "title": "Proaktif Yardım",
+      "description": "İhtiyaçlarınızı öngören ve akıllı öneriler sunan AI"
+    }
+  },
+  "benefits": {
+    "pro_features": {
+      "title": "Pro Özellikler",
+      "description": "İleri düzey kullanıcılar için gelişmiş AI yetenekleri"
+    }
+  },
+  "testimonials": {
+    "title": "Müşterilerimiz Ne Diyor",
+    "subtitle": "Dünya çapında işletmeler tarafından güvenilen"
+  },
+  "cta_section": {
+    "title": "İşinizi Dönüştürmeye Hazır mısınız?",
+    "subtitle": "Halihazırda Optigence kullanan binlerce işletmeye katılın",
+    "button": "Yolculuğunuza Başlayın"
+  },
+  "ai_demos": {
+    "title": "AI Zekasını Deneyimleyin",
+    "subtitle": "Optigence AI'nin gerçek zamanlı olarak nasıl anladığını, düşündüğünü ve yanıt verdiğini görün",
+    "intent_detection": {
+      "title": "Niyet Algılama",
+      "subtitle": "AI neye ihtiyacınız olduğunu anlıyor",
+      "placeholder": "Yardım etmek istediğiniz şeyi yazın...",
+      "detected_intent": "Algılanan Niyet:",
+      "confidence": "emin",
+      "excellent_match": "Mükemmel eşleşme!",
+      "very_good_match": "Çok iyi eşleşme",
+      "good_match": "İyi eşleşme",
+      "moderate_match": "Orta eşleşme",
+      "try_examples": "Bu örnekleri deneyin:",
+      "analysis_process": "AI Analiz Süreci:",
+      "example1": "Proje teklifi hakkında müşterimize takip e-postası yaz",
+      "example2": "1500 dolar altında en iyi oyun laptop'unu bul",
+      "example3": "Tokyo'ya 5 günlük aile tatili planla",
+      "intents": {
+        "email_generation": "E-posta Oluşturma",
+        "product_search": "Ürün Arama", 
+        "travel_planning": "Seyahat Planlama",
+        "job_search": "İş Arama",
+        "information_query": "Bilgi Sorgusu",
+        "document_creation": "Belge Oluşturma",
+        "reservation_system": "Rezervasyon Sistemi",
+        "general_ai_assistant": "Genel AI Asistanı"
+      },
+      "steps": {
+        "parsing": "Kullanıcı girişi ayrıştırılıyor...",
+        "analyzing": "Dil kalıpları analiz ediliyor...",
+        "identifying": "Anahtar varlıklar tanımlanıyor...",
+        "calculating": "Niyet güveni hesaplanıyor...",
+        "generating": "Öneriler oluşturuluyor..."
+      }
+    },
+    "thought_process": {
+      "title": "AI Düşünce Süreci",
+      "subtitle": "AI'nin adım adım düşündüğünü izleyin",
+      "start_analysis": "AI Analizini Başlat",
+      "footer": "Nöral işlem devam ediyor",
+      "steps": {
+        "analyzing": "Girişi Analiz Et",
+        "analyzing_desc": "Kullanıcı bağlamını, niyetini ve duygusal tonunu anlama",
+        "processing": "Veriyi İşle",
+        "processing_desc": "Geniş bilgi tabanına erişim ve desen tanıma",
+        "generating": "Çözüm Üret",
+        "generating_desc": "Kişiselleştirilmiş, bağlamsal olarak akıllı yanıt oluşturma",
+        "optimizing": "Çıktıyı Optimize Et",
+        "optimizing_desc": "Maksimum doğruluk, alaka düzeyi ve kullanışlılık için iyileştirme"
+      }
+    },
+    "smart_prediction": {
+      "title": "Akıllı Tahminler",
+      "subtitle": "AI tahminlerini görmek için modüllerin üzerine gelin",
+      "hover_prompt": "AI tahminlerini görmek için bir modülün üzerine gelin",
+      "generating": "AI tahminleri üretiliyor...",
+      "ai_predicted": "AI tarafından tahmin edilen görevler",
+      "modules": {
+        "optimail": "OptiMail",
+        "optishop": "OptiShop",
+        "optihire": "OptiHire",
+        "optitrip": "OptiTrip"
+      },
+      "predictions": {
+        "OptiMail": {
+          "0": "Müşteri toplantısı için takip e-postası oluştur",
+          "1": "Ürün lansmanı için haber bülteni oluştur",
+          "2": "Gecikmeli teslimat için özür e-postası yaz",
+          "3": "Ekibe teşekkür mesajı yaz"
+        },
+        "OptiShop": {
+          "0": "100$ altında kablosuz kulaklık bul",
+          "1": "iPhone 15 vs Samsung Galaxy karşılaştır",
+          "2": "Ergonomik ofis koltuğu ara",
+          "3": "Teknoloji meraklısı için doğum günü hediyesi bul"
+        },
+        "OptiHire": {
+          "0": "Uzaktan React geliştirici pozisyonları bul", 
+          "1": "Pazarlama müdürü rolü için özgeçmiş oluştur",
+          "2": "Yazılım mühendisi mülakatına hazırlan",
+          "3": "Giriş seviyesi veri analisti işleri ara"
+        },
+        "OptiTrip": {
+          "0": "Tokyo için 7 günlük gezi planı yap",
+          "1": "Barselona'da bütçe dostu oteller bul",
+          "2": "NYC'den Londra'ya uçak bileti rezerve et",
+          "3": "Prag'daki gizli cevherleri keşfet"
+        }
+      }
+    }
+  }
+}

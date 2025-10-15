@@ -1,0 +1,171 @@
+{
+  "hero": {
+    "tagline": "Demnächst verfügbar - Schließe dich der KI-Revolution an",
+    "title": "KI-gestützte Geschäftslösungen",
+    "subtitle": "Transformiere dein Unternehmen mit intelligenter Automatisierung und KI-gesteuerten Erkenntnissen für E-Mail, Shopping, Einstellungen und Reisen - alles angetrieben von modernster künstlicher Intelligenz.",
+    "description": "Optigence bietet modernste KI-Lösungen zur Optimierung von Betriebsabläufen, Steigerung der Produktivität und Förderung des Wachstums für Unternehmen jeder Größe.",
+    "value1": "KI-gestützt",
+    "value2": "Multi-Modul",
+    "value3": "Enterprise-bereit",
+    "no_spam": "Niemals Spam",
+    "early_access": "Früher Zugang garantiert",
+    "cta_primary": "Loslegen",
+    "cta_secondary": "Mehr erfahren",
+    "watch_demo": "Demo ansehen"
+  },
+  "modules": {
+    "title": "KI-gestützte Module",
+    "subtitle": "Wähle die Module, die deinen Anforderungen entsprechen",
+    "optimail": {
+      "description": "Dein super-intelligenter E-Mail-Assistent, der für dich denkt, fühlt und spricht",
+      "feature1": "Intelligente E-Mail-Erstellung mit emotionaler Intelligenz",
+      "feature2": "Thread-Zusammenfassung mit Aktionspunkten", 
+      "feature3": "Kontextbewusste Antwortvorschläge",
+      "feature4": "Tonanalyse und Sprachausgabe"
+    },
+    "optishop": {
+      "description": "KI-gestützter Shopping-Assistent für intelligentere Kaufentscheidungen",
+      "feature1": "Produktrecherche und Empfehlungen",
+      "feature2": "Preisvergleich zwischen Händlern",
+      "feature3": "Deal-Findung und Rabatt-Benachrichtigungen",
+      "feature4": "Intelligente Einkaufslisten und Wunschlisten"
+    },
+    "optihire": {
+      "description": "Karriereentwicklungs- und Jobsuch-Assistent",
+      "feature1": "Optimierung von Lebenslauf und Anschreiben",
+      "feature2": "Vorbereitung und Übung für Vorstellungsgespräche",
+      "feature3": "Karriereweg und Kompetenzentwicklung",
+      "feature4": "Job-Matching und Networking-Tipps"
+    },
+    "optitrip": {
+      "description": "Reiseplanungs- und sozialer Begleiter-Assistent",
+      "feature1": "Detaillierte Reiserouten-Planung",
+      "feature2": "Lokale Empfehlungen und Einblicke",
+      "feature3": "Budgetplanung und Ausgabenverfolgung",
+      "feature4": "Reise-Community und Begleiter-Matching"
+    }
+  },
+  "features": {
+    "title": "Warum Optigence wählen",
+    "subtitle": "Leistungsstarke Funktionen für moderne Unternehmen",
+    "minimal_input": {
+      "title": "Minimaler Eingabeaufwand",
+      "description": "Maximale Ergebnisse mit minimalem Aufwand - unsere KI versteht den Kontext"
+    },
+    "multilingual": {
+      "title": "Mehrsprachiger Support",
+      "description": "Kommuniziere in mehreren Sprachen mit muttersprachlicher Kompetenz"
+    },
+    "proactive": {
+      "title": "Proaktive Unterstützung",
+      "description": "KI, die deine Bedürfnisse antizipiert und intelligente Vorschläge liefert"
+    }
+  },
+  "benefits": {
+    "pro_features": {
+      "title": "Pro-Funktionen",
+      "description": "Erweiterte KI-Fähigkeiten für Power-User"
+    }
+  },
+  "testimonials": {
+    "title": "Was unsere Kunden sagen",
+    "subtitle": "Vertraut von Unternehmen weltweit"
+  },
+  "cta_section": {
+    "title": "Bereit, dein Unternehmen zu transformieren?",
+    "subtitle": "Schließe dich Tausenden von Unternehmen an, die bereits Optigence nutzen",
+    "button": "Starte deine Reise"
+  },
+  "ai_demos": {
+    "title": "KI-Intelligenz erleben",
+    "subtitle": "Sieh, wie Optigence KI versteht, denkt und in Echtzeit reagiert",
+    "intent_detection": {
+      "title": "Absichtserkennung",
+      "subtitle": "KI versteht, was du brauchst",
+      "placeholder": "Schreibe, wobei du Hilfe brauchst...",
+      "detected_intent": "Erkannte Absicht:",
+      "confidence": "sicher",
+      "excellent_match": "Ausgezeichnete Übereinstimmung!",
+      "very_good_match": "Sehr gute Übereinstimmung",
+      "good_match": "Gute Übereinstimmung",
+      "moderate_match": "Mäßige Übereinstimmung",
+      "try_examples": "Probiere diese Beispiele:",
+      "analysis_process": "KI-Analyseprozess:",
+      "example1": "Schreibe eine Folge-E-Mail an unseren Kunden über den Projektvorschlag",
+      "example2": "Finde den besten Gaming-Laptop unter 1500 Dollar",
+      "example3": "Plane einen 5-tägigen Familienurlaub nach Tokio",
+      "intents": {
+        "email_generation": "E-Mail-Generierung",
+        "product_search": "Produktsuche",
+        "travel_planning": "Reiseplanung",
+        "job_search": "Jobsuche", 
+        "information_query": "Informationsabfrage",
+        "document_creation": "Dokumentenerstellung",
+        "reservation_system": "Reservierungssystem",
+        "general_ai_assistant": "Allgemeiner KI-Assistent"
+      },
+      "steps": {
+        "parsing": "Eingabe wird analysiert...",
+        "analyzing": "Sprachmuster werden analysiert...",
+        "identifying": "Schlüsselentitäten werden identifiziert...",
+        "calculating": "Vertrauenswert wird berechnet...",
+        "generating": "Empfehlungen werden generiert..."
+      }
+    },
+    "thought_process": {
+      "title": "KI-Denkprozess",
+      "subtitle": "Beobachte, wie KI Schritt für Schritt denkt",
+      "start_analysis": "KI-Analyse starten",
+      "footer": "Neuronale Verarbeitung im Einsatz",
+      "steps": {
+        "analyzing": "Eingabe analysieren",
+        "analyzing_desc": "Benutzerkontext, Absicht und emotionalen Ton verstehen",
+        "processing": "Daten verarbeiten", 
+        "processing_desc": "Zugriff auf umfangreiches Wissen und Mustererkennung",
+        "generating": "Lösung generieren",
+        "generating_desc": "Personalisierte, kontextuell intelligente Antwort erstellen",
+        "optimizing": "Ausgabe optimieren",
+        "optimizing_desc": "Verfeinerung für maximale Genauigkeit, Relevanz und Nützlichkeit"
+      }
+    },
+    "smart_prediction": {
+      "title": "Intelligente Vorhersagen",
+      "subtitle": "Bewege die Maus über Module, um KI-Vorhersagen zu sehen",
+      "hover_prompt": "Bewege die Maus über ein Modul, um KI-Vorhersagen zu sehen",
+      "generating": "Generiere KI-Vorhersagen...",
+      "ai_predicted": "KI-vorhergesagte Aufgaben für",
+      "modules": {
+        "optimail": "OptiMail",
+        "optishop": "OptiShop", 
+        "optihire": "OptiHire",
+        "optitrip": "OptiTrip"
+      },
+      "predictions": {
+        "OptiMail": {
+          "0": "Follow-up E-Mail für Kundentreffen generieren",
+          "1": "Newsletter für Produktlancierung erstellen",
+          "2": "Entschuldigungs-E-Mail für verspätete Lieferung verfassen",
+          "3": "Dankesnachricht an Team schreiben"
+        },
+        "OptiShop": {
+          "0": "Kabellose Kopfhörer unter 100€ finden",
+          "1": "iPhone 15 vs Samsung Galaxy vergleichen",
+          "2": "Nach ergonomischem Bürostuhl suchen",
+          "3": "Geburtstagsgeschenk für Tech-Enthusiasten finden"
+        },
+        "OptiHire": {
+          "0": "Remote React-Entwickler Positionen finden", 
+          "1": "Lebenslauf für Marketing Manager Rolle erstellen",
+          "2": "Sich auf Software-Entwickler Interview vorbereiten",
+          "3": "Nach Einstiegspositionen für Datenanalysten suchen"
+        },
+        "OptiTrip": {
+          "0": "7-tägige Reiseroute für Tokio planen",
+          "1": "Budget-Hotels in Barcelona finden",
+          "2": "Flüge von NYC nach London buchen",
+          "3": "Versteckte Juwelen in Prag entdecken"
+        }
+      }
+    }
+  }
+}

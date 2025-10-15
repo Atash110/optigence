@@ -1,0 +1,53 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://optigence.tech/sitemap.xml
+
+# Disallow admin and API routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+Disallow: /.well-known/
+
+# Allow important pages for SEO
+Allow: /
+Allow: /about
+Allow: /features  
+Allow: /pricing
+Allow: /waitlist
+Allow: /optimail
+Allow: /optishop
+Allow: /optihire
+Allow: /optitrip
+
+# Additional SEO-friendly paths
+Allow: /sitemap.xml
+Allow: /robots.txt
+
+# Search Engine Specific Rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+# Block unwanted bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Crawl delay for general bots
+Crawl-delay: 1

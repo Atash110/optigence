@@ -1,0 +1,171 @@
+{
+  "hero": {
+    "tagline": "Próximamente - Únete a la Revolución de IA",
+    "title": "Soluciones Empresariales Impulsadas por IA",
+    "subtitle": "Transforma tu negocio con automatización inteligente e insights impulsados por IA en email, compras, contratación y viajes - todo potenciado por inteligencia artificial de vanguardia.",
+    "description": "Optigence proporciona soluciones de IA de vanguardia para optimizar operaciones, mejorar la productividad e impulsar el crecimiento para empresas de todos los tamaños.",
+    "value1": "Impulsado por IA",
+    "value2": "Multi-Módulo",
+    "value3": "Listo para Empresas",
+    "no_spam": "Sin spam, nunca",
+    "early_access": "Acceso temprano garantizado",
+    "cta_primary": "Comenzar",
+    "cta_secondary": "Saber Más",
+    "watch_demo": "Ver Demo"
+  },
+  "modules": {
+    "title": "Módulos Impulsados por IA",
+    "subtitle": "Elige los módulos que se adapten a tus necesidades",
+    "optimail": {
+      "description": "Tu asistente de email súper inteligente que piensa, siente y habla por ti",
+      "feature1": "Composición inteligente de emails con inteligencia emocional",
+      "feature2": "Resumen de conversaciones con puntos de acción", 
+      "feature3": "Sugerencias de respuesta conscientes del contexto",
+      "feature4": "Análisis de tono y narración de voz"
+    },
+    "optishop": {
+      "description": "Asistente de compras impulsado por IA para decisiones de compra más inteligentes",
+      "feature1": "Investigación de productos y recomendaciones",
+      "feature2": "Comparación de precios entre minoristas",
+      "feature3": "Búsqueda de ofertas y alertas de descuentos",
+      "feature4": "Listas de compras inteligentes y listas de deseos"
+    },
+    "optihire": {
+      "description": "Asistente de desarrollo profesional y búsqueda de empleo",
+      "feature1": "Optimización de CV y carta de presentación",
+      "feature2": "Preparación y práctica de entrevistas",
+      "feature3": "Trayectoria profesional y desarrollo de habilidades",
+      "feature4": "Emparejamiento de trabajos y consejos de networking"
+    },
+    "optitrip": {
+      "description": "Asistente de planificación de viajes y compañero social",
+      "feature1": "Planificación detallada de itinerarios",
+      "feature2": "Recomendaciones locales e insights",
+      "feature3": "Planificación de presupuesto y seguimiento de gastos",
+      "feature4": "Comunidad de viajes y emparejamiento de compañeros"
+    }
+  },
+  "features": {
+    "title": "Por Qué Elegir Optigence",
+    "subtitle": "Características poderosas diseñadas para empresas modernas",
+    "minimal_input": {
+      "title": "Entrada Mínima Requerida",
+      "description": "Obtén resultados máximos con esfuerzo mínimo - nuestra IA entiende el contexto"
+    },
+    "multilingual": {
+      "title": "Soporte Multiidioma",
+      "description": "Comunícate en múltiples idiomas con fluidez nativa"
+    },
+    "proactive": {
+      "title": "Asistencia Proactiva",
+      "description": "IA que anticipa tus necesidades y proporciona sugerencias inteligentes"
+    }
+  },
+  "benefits": {
+    "pro_features": {
+      "title": "Características Pro",
+      "description": "Capacidades avanzadas de IA para usuarios avanzados"
+    }
+  },
+  "testimonials": {
+    "title": "Lo Que Dicen Nuestros Clientes",
+    "subtitle": "Confiado por empresas en todo el mundo"
+  },
+  "cta_section": {
+    "title": "¿Listo para Transformar Tu Negocio?",
+    "subtitle": "Únete a miles de empresas que ya usan Optigence",
+    "button": "Comienza Tu Viaje"
+  },
+  "ai_demos": {
+    "title": "Experimenta la Inteligencia IA",
+    "subtitle": "Ve cómo la IA de Optigence entiende, piensa y responde en tiempo real",
+    "intent_detection": {
+      "title": "Detección de Intención",
+      "subtitle": "La IA entiende lo que necesitas",
+      "placeholder": "Escribe en qué necesitas ayuda...",
+      "detected_intent": "Intención Detectada:",
+      "confidence": "seguro",
+      "excellent_match": "¡Excelente coincidencia!",
+      "very_good_match": "Muy buena coincidencia",
+      "good_match": "Buena coincidencia",
+      "moderate_match": "Coincidencia moderada",
+      "try_examples": "Prueba estos ejemplos:",
+      "analysis_process": "Proceso de Análisis IA:",
+      "example1": "Escribe un correo de seguimiento al cliente sobre la propuesta del proyecto",
+      "example2": "Encuentra la mejor laptop gaming por menos de $1500",
+      "example3": "Planifica unas vacaciones familiares de 5 días a Tokio",
+      "intents": {
+        "email_generation": "Generación de Email",
+        "product_search": "Búsqueda de Productos",
+        "travel_planning": "Planificación de Viajes", 
+        "job_search": "Búsqueda de Trabajo",
+        "information_query": "Consulta de Información",
+        "document_creation": "Creación de Documentos",
+        "reservation_system": "Sistema de Reservas",
+        "general_ai_assistant": "Asistente IA General"
+      },
+      "steps": {
+        "parsing": "Analizando entrada...",
+        "analyzing": "Analizando patrones de lenguaje...",
+        "identifying": "Identificando entidades clave...",
+        "calculating": "Calculando confianza de intención...",
+        "generating": "Generando recomendaciones..."
+      }
+    },
+    "thought_process": {
+      "title": "Proceso de Pensamiento IA",
+      "subtitle": "Observa cómo la IA piensa paso a paso",
+      "start_analysis": "Iniciar Análisis IA",
+      "footer": "Procesamiento neuronal en acción",
+      "steps": {
+        "analyzing": "Analizando Entrada",
+        "analyzing_desc": "Entendiendo contexto, intención y tono emocional del usuario",
+        "processing": "Procesando Datos", 
+        "processing_desc": "Accediendo a vasta base de conocimientos y reconocimiento de patrones",
+        "generating": "Generando Solución",
+        "generating_desc": "Creando respuesta personalizada y contextualmente inteligente",
+        "optimizing": "Optimizando Salida",
+        "optimizing_desc": "Refinando para máxima precisión, relevancia y utilidad"
+      }
+    },
+    "smart_prediction": {
+      "title": "Predicciones Inteligentes",
+      "subtitle": "Pasa el cursor sobre los módulos para ver predicciones IA",
+      "hover_prompt": "Pasa el cursor sobre un módulo para ver predicciones IA",
+      "generating": "Generando predicciones IA...",
+      "ai_predicted": "Tareas predichas por IA para",
+      "modules": {
+        "optimail": "OptiMail",
+        "optishop": "OptiShop", 
+        "optihire": "OptiHire",
+        "optitrip": "OptiTrip"
+      },
+      "predictions": {
+        "OptiMail": {
+          "0": "Generar email de seguimiento para reunión con cliente",
+          "1": "Crear newsletter para lanzamiento de producto",
+          "2": "Redactar email de disculpa por entrega retrasada",
+          "3": "Escribir mensaje de agradecimiento al equipo"
+        },
+        "OptiShop": {
+          "0": "Encontrar auriculares inalámbricos bajo $100",
+          "1": "Comparar iPhone 15 vs Samsung Galaxy",
+          "2": "Buscar silla de oficina ergonómica",
+          "3": "Encontrar regalo de cumpleaños para entusiasta tech"
+        },
+        "OptiHire": {
+          "0": "Encontrar posiciones de desarrollador React remoto", 
+          "1": "Crear currículum para rol de gerente de marketing",
+          "2": "Prepararse para entrevista de ingeniero de software",
+          "3": "Buscar trabajos de analista de datos nivel inicial"
+        },
+        "OptiTrip": {
+          "0": "Planear itinerario de 7 días para Tokio",
+          "1": "Encontrar hoteles económicos en Barcelona",
+          "2": "Reservar vuelos de NYC a Londres",
+          "3": "Descubrir joyas ocultas en Praga"
+        }
+      }
+    }
+  }
+}

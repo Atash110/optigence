@@ -1,0 +1,61 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "features": "Features", 
+    "pricing": "Pricing",
+    "waitlist": "Join Waitlist",
+    "get_started": "Get Started",
+    "dashboard": "Dashboard"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "close": "Close",
+    "save": "Save",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "phone": "Phone",
+    "company": "Company",
+    "required": "Required",
+    "optional": "Optional",
+    "learn_more": "Learn More",
+    "get_started": "Get Started",
+    "join_waitlist": "Join the Waitlist",
+    "try_now": "Try Now",
+    "coming_soon": "Coming Soon",
+    "powered_by": "Powered by",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "continue": "Continue"
+  },
+  "footer": {
+    "company": "Company",
+    "products": "Products",
+    "resources": "Resources", 
+    "legal": "Legal",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service",
+    "all_rights_reserved": "All rights reserved.",
+    "built_with": "Built with ❤️ by Optigence"
+  },
+  "language": {
+    "select_language": "Select Language",
+    "current_language": "Current Language",
+    "english": "English",
+    "german": "Deutsch",
+    "spanish": "Español", 
+    "french": "Français",
+    "azerbaijani": "Azərbaycan",
+    "turkish": "Türkçe",
+    "chinese": "中文",
+    "russian": "Русский",
+    "hindi": "हिन्दी",
+    "arabic": "العربية"
+  }
+}
